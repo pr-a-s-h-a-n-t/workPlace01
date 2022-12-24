@@ -5,7 +5,7 @@ import LandingPage from '../Components/LandingPage';
 import CandidateApplications from '../Components/pages/candidate/CandidateApplications';
 import CandidateConversation from '../Components/pages/candidate/CandidateConversation';
 import CandidateJobs from '../Components/pages/candidate/CandidateJobs';
-import CandidateOnboarding from '../Components/pages/candidate/candidateOnboarding/index';
+import CandidateOnboarding from '../Components/pages/candidate/CandidateOnboarding';
 import CandidateProfile from '../Components/pages/candidate/CandidateProfile';
 import EmployerApplications from '../Components/pages/employer/EmployerApplications';
 import EmployerConversations from '../Components/pages/employer/EmployerConversations';
