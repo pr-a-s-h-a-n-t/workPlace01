@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from "react-router-dom";
-import AuthPage from '../Components/AuthPage';
+import AuthPage from '../Components/pages/AuthPage';
 import LandingPage from '../Components/LandingPage';
 import CandidateApplications from '../Components/pages/candidate/CandidateApplications';
 import CandidateConversation from '../Components/pages/candidate/CandidateConversation';
@@ -10,13 +10,13 @@ import CandidateProfile from '../Components/pages/candidate/CandidateProfile';
 import EmployerApplications from '../Components/pages/employer/EmployerApplications';
 import EmployerConversations from '../Components/pages/employer/EmployerConversations';
 import EmployerJobs from '../Components/pages/employer/EmployerJobs';
-import EmployerOnboarding from '../Components/pages/employer/EmployerOnboarding';
+import EmployerOnboarding from '../Components/pages/employer/employerOnboarding/index';
 import EmployerProfile from '../Components/pages/employer/EmployerProfile';
 
 function Navs() {
 
     const ProtectedCandidateRoute = () => {
-        if (false) {
+        if (true) {
             return <Outlet />
         }
         else {
@@ -24,7 +24,7 @@ function Navs() {
         }
     }
     const ProtectedEmployerRoute = () => {
-        if (false) {
+        if (true) {
             return <Outlet />
         }
         else {
