@@ -17,12 +17,11 @@ import CustomDropDown from "../../../common/CustomDropDown";
 import SearchDropDown from "../../../common/SearchDropDown";
 import { useNavigate } from "react-router-dom";
 import {
-  currencyDropDownList,
   yearsOfExperience,
   jobTitle,
   SkillsDownList,
 } from "../../../../constants/index";
-function EmployerOnboarding() {
+function CandidateOnboarding() {
   const navigate = useNavigate();
   const [uploadLoading, setUploadLoading] = useState(0);
   let inputRef = React.createRef();
@@ -30,9 +29,9 @@ function EmployerOnboarding() {
     name: JSON.parse(localStorage.getItem("user")).displayName || "",
     phone: "",
     email: JSON.parse(localStorage.getItem("user")).email,
-    totalExperience: "", //d
-    skills: [], // m d
-    primaryRole: "", //d
+    totalExperience: "",
+    skills: [],
+    primaryRole: "",
     resume: "",
   });
 
@@ -53,7 +52,7 @@ function EmployerOnboarding() {
         type: "candidate",
       });
       Notification({ message: "profile created successfully" });
-      navigate("/candidate/profile")
+      navigate("/candidate/profile");
     } catch (err) {
       console.log(err);
       Notification({ message: "something went wrong" });
@@ -110,7 +109,7 @@ function EmployerOnboarding() {
     <form onSubmit={(e) => submit(e)} className="onboarding-container">
       <h2>Setup your Profile</h2>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} >
           <label className="field-label"> Name</label>
           <TextField
             required
@@ -120,10 +119,10 @@ function EmployerOnboarding() {
             onChange={(e) => setValues({ ...values, name: e.target.value })}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} >
           <label className="field-label">Email</label>
           <TextField
-          disabled
+            disabled
             size="small"
             type="email"
             required
@@ -132,7 +131,9 @@ function EmployerOnboarding() {
             onChange={(e) => setValues({ ...values, email: e.target.value })}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} 
+        
+        >
           <label className="field-label">Phone</label>
           <TextField
             size="small"
@@ -143,7 +144,16 @@ function EmployerOnboarding() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item
+        xs={12} sm={6}
+           
+          md={6}
+          sx={{
+            // border: "1px solid red",
+            textAlign: "left",
+            // paddingTop: "1rem",
+          }}
+        >
           <label className="text-label">Experience</label>
           <CustomDropDown
             required={true}
@@ -153,7 +163,17 @@ function EmployerOnboarding() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12} sm={6}
+           
+          md={6}
+          sx={{
+            // border: "1px solid red",
+            textAlign: "left",
+            marginBottom: "0"
+          }}
+        >
           <label className="text-label">Primary Role</label>
 
           <CustomDropDown
@@ -169,9 +189,19 @@ function EmployerOnboarding() {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <label className="text-label">skills</label>
+        <Grid item
+        xs={12} sm={6}
+           
+          md={6}
+          sx={{
+            // border: "1px solid red",
+            textAlign: "left",
+            // paddingTop: "1rem",
+          }}
+        >
+          <label className="text-label">Skills</label>
           <SearchDropDown
+           
             required={true}
             dropDownList={SkillsDownList}
             onChange={(data) => handleSkillsInput(data)}
@@ -234,18 +264,4 @@ function EmployerOnboarding() {
   );
 }
 
-export default EmployerOnboarding;
-
-
-// We are going to take this information from employer for onboarding purposes.
-
-// Company name
-// industry type
-// no of employees
-// company website
-// company email
-// company phone number
-// company location
-// company tagline  
-// company description
-// company logo
+export default CandidateOnboarding;
