@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -17,22 +17,38 @@ import EmployerApplications from "../Components/pages/employer/EmployerApplicati
 import EmployerConversations from "../Components/pages/employer/EmployerConversations";
 import EmployerJobs from "../Components/pages/employer/EmployerJobs";
 import EmployerOnboarding from "../Components/pages/employer/employerOnboarding/index";
-import EmployerProfile from "../Components/pages/employer/EmployerProfile";
+import EmployerProfile from "../Components/pages/employer/employerProfile/index";
 import CandidateHoc from "../HOC/CandidateHoc";
 import EmployerHoc from "../HOC/EmployerHoc";
-
- 
+//  import setDoc , getDoc, db from firebase
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig/index";
 
 function Navs() {
+  // const[temp, setTemp] = useState( {});
+  // let user = JSON.parse(localStorage.getItem("user"));
+  // let uid = user.uid;
+  // let docRef = doc(db, "userInfo", uid);
+  // getDoc(docRef).then((doc_) => {
+  //   const data = doc_.data();
+  //   // setTemp(data);
+  //   // console.log( data );
+  // });
+  // console.log( temp);
+  // let userType =    temp.type;
   const ProtectedCandidateRoute = () => {
+    // if (userType === "candidate") {
     if (true) {
+
       return <Outlet />;
     } else {
       return <Navigate to="./candidate/auth" />;
     }
   };
   const ProtectedEmployerRoute = () => {
-    if (true) {
+    // if (userType === "employer") {
+    if (true)  {
+
       return <Outlet />;
     } else {
       return <Navigate to="./employer/auth" />;
@@ -54,15 +70,37 @@ function Navs() {
             path="/candidate/onboarding"
             element={<CandidateOnboarding />}
           />
-          <Route path="/candidate/profile" element={<CandidateHoc><CandidateProfile /></CandidateHoc> } />
-          <Route path="/candidate/jobs" element={<CandidateHoc><CandidateJobs /></CandidateHoc> } />
+          <Route
+            path="/candidate/profile"
+            element={
+              <CandidateHoc>
+                <CandidateProfile />
+              </CandidateHoc>
+            }
+          />
+          <Route
+            path="/candidate/jobs"
+            element={
+              <CandidateHoc>
+                <CandidateJobs />
+              </CandidateHoc>
+            }
+          />
           <Route
             path="/candidate/applications"
-            element={<CandidateHoc><CandidateApplications /></CandidateHoc> }
+            element={
+              <CandidateHoc>
+                <CandidateApplications />
+              </CandidateHoc>
+            }
           />
           <Route
             path="/candidate/conversations"
-            element={<CandidateHoc><CandidateConversation /></CandidateHoc> }
+            element={
+              <CandidateHoc>
+                <CandidateConversation />
+              </CandidateHoc>
+            }
           />
         </Route>
 
@@ -76,22 +114,38 @@ function Navs() {
           <Route path="/employer/onboarding" element={<EmployerOnboarding />} />
 
           <Route
-                        path='/employer/profile'
-                        element={<EmployerHoc> <EmployerProfile /> </EmployerHoc>}
-                    />
-                    <Route
-                        path='/employer/jobs'
-                        element={<EmployerHoc><EmployerJobs /></EmployerHoc> }
-                    />
-                    <Route
-                        path='/employer/applications'
-                        element={<EmployerHoc><EmployerApplications /></EmployerHoc> }
-                    />
-                    <Route
-                        path='/employer/conversations'
-                        element={<EmployerHoc><EmployerConversations /></EmployerHoc>  }
-                    />
-           
+            path="/employer/profile"
+            element={
+              <EmployerHoc>
+                {" "}
+                <EmployerProfile />{" "}
+              </EmployerHoc>
+            }
+          />
+          <Route
+            path="/employer/jobs"
+            element={
+              <EmployerHoc>
+                <EmployerJobs />
+              </EmployerHoc>
+            }
+          />
+          <Route
+            path="/employer/applications"
+            element={
+              <EmployerHoc>
+                <EmployerApplications />
+              </EmployerHoc>
+            }
+          />
+          <Route
+            path="/employer/conversations"
+            element={
+              <EmployerHoc>
+                <EmployerConversations />
+              </EmployerHoc>
+            }
+          />
         </Route>
       </Routes>
     </Router>
