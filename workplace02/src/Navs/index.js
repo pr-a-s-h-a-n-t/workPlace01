@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -20,38 +20,35 @@ import EmployerOnboarding from "../Components/pages/employer/employerOnboarding/
 import EmployerProfile from "../Components/pages/employer/employerProfile/index";
 import CandidateHoc from "../HOC/CandidateHoc";
 import EmployerHoc from "../HOC/EmployerHoc";
-//  import setDoc , getDoc, db from firebase
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebaseConfig/index";
+
+import { userContext } from "../contex/UserContex";
 
 function Navs() {
-  // const[temp, setTemp] = useState( {});
-  // let user = JSON.parse(localStorage.getItem("user"));
-  // let uid = user.uid;
-  // let docRef = doc(db, "userInfo", uid);
-  // getDoc(docRef).then((doc_) => {
-  //   const data = doc_.data();
-  //   // setTemp(data);
-  //   // console.log( data );
-  // });
-  // console.log( temp);
-  // let userType =    temp.type;
-  const ProtectedCandidateRoute = () => {
-    // if (userType === "candidate") {
-    if (true) {
+  const [state, dispatch] = useContext(userContext);
+  const isAuth = state.isAuth;
+  const userInfo = state.userInfo;
 
+  const ProtectedCandidateRoute = () => {
+    if (isAuth && userInfo?.type === "candidate") {
+      console.log(isAuth);
       return <Outlet />;
     } else {
-      return <Navigate to="./candidate/auth" />;
+      return <Navigate to="/candidate/auth" />;
     }
   };
   const ProtectedEmployerRoute = () => {
-    // if (userType === "employer") {
-    if (true)  {
-
+    if (isAuth && userInfo?.type === "employer") {
       return <Outlet />;
     } else {
-      return <Navigate to="./employer/auth" />;
+      return <Navigate to="/employer/auth" />;
+    }
+  };
+
+  const OnboardingProtectedRoute = () => {
+    if (isAuth) {
+      return <Outlet />;
+    } else {
+      return <Navigate to="/" />;
     }
   };
 
@@ -65,11 +62,18 @@ function Navs() {
 
         {/* we dont want user to access the Candidate profile, Candidate jobs,Candidate application and Candidate conversations section without login */}
         {/* to achieve this functionality we are going to use   PROTECTED ROUTE */}
-        <Route element={<ProtectedCandidateRoute />}>
+
+        <Route element={<OnboardingProtectedRoute />}>
           <Route
             path="/candidate/onboarding"
             element={<CandidateOnboarding />}
           />
+        </Route>
+        <Route element={<ProtectedCandidateRoute />}>
+          {/* <Route
+            path="/candidate/onboarding"
+            element={<CandidateOnboarding />}
+          /> */}
           <Route
             path="/candidate/profile"
             element={
@@ -109,16 +113,17 @@ function Navs() {
 
         {/* we dont want user to access the employer profile, employer   jobs,employer application and employer conversations section without login */}
         {/* to achieve this functionality we are going to use   PROTECTED ROUTE */}
-
-        <Route element={<ProtectedEmployerRoute />}>
+        <Route element={<OnboardingProtectedRoute />}>
           <Route path="/employer/onboarding" element={<EmployerOnboarding />} />
+        </Route>
+        <Route element={<ProtectedEmployerRoute />}>
+          {/* <Route path="/employer/onboarding" element={<EmployerOnboarding />} /> */}
 
           <Route
             path="/employer/profile"
             element={
               <EmployerHoc>
-                {" "}
-                <EmployerProfile />{" "}
+                <EmployerProfile />
               </EmployerHoc>
             }
           />
