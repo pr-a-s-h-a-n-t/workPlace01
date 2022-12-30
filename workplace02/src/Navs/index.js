@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -21,34 +21,21 @@ import EmployerProfile from "../Components/pages/employer/employerProfile/index"
 import CandidateHoc from "../HOC/CandidateHoc";
 import EmployerHoc from "../HOC/EmployerHoc";
 
-import { userContext } from "../contex/UserContex";
+ 
 
 function Navs() {
-  const [state, dispatch] = useContext(userContext);
-  const isAuth = state.isAuth;
-  const userInfo = state.userInfo;
-
   const ProtectedCandidateRoute = () => {
-    if (isAuth && userInfo?.type === "candidate") {
-      console.log(isAuth);
+    if (true) {
       return <Outlet />;
     } else {
-      return <Navigate to="/candidate/auth" />;
+      return <Navigate to="./candidate/auth" />;
     }
   };
   const ProtectedEmployerRoute = () => {
-    if (isAuth && userInfo?.type === "employer") {
+    if (true) {
       return <Outlet />;
     } else {
-      return <Navigate to="/employer/auth" />;
-    }
-  };
-
-  const OnboardingProtectedRoute = () => {
-    if (isAuth) {
-      return <Outlet />;
-    } else {
-      return <Navigate to="/" />;
+      return <Navigate to="./employer/auth" />;
     }
   };
 
@@ -62,49 +49,20 @@ function Navs() {
 
         {/* we dont want user to access the Candidate profile, Candidate jobs,Candidate application and Candidate conversations section without login */}
         {/* to achieve this functionality we are going to use   PROTECTED ROUTE */}
-
-        <Route element={<OnboardingProtectedRoute />}>
-          <Route
-            path="/candidate/onboarding"
-            element={<CandidateOnboarding />}
-          />
-        </Route>
         <Route element={<ProtectedCandidateRoute />}>
-          {/* <Route
+          <Route
             path="/candidate/onboarding"
             element={<CandidateOnboarding />}
-          /> */}
-          <Route
-            path="/candidate/profile"
-            element={
-              <CandidateHoc>
-                <CandidateProfile />
-              </CandidateHoc>
-            }
           />
-          <Route
-            path="/candidate/jobs"
-            element={
-              <CandidateHoc>
-                <CandidateJobs />
-              </CandidateHoc>
-            }
-          />
+          <Route path="/candidate/profile" element={<CandidateHoc><CandidateProfile /></CandidateHoc> } />
+          <Route path="/candidate/jobs" element={<CandidateHoc><CandidateJobs /></CandidateHoc> } />
           <Route
             path="/candidate/applications"
-            element={
-              <CandidateHoc>
-                <CandidateApplications />
-              </CandidateHoc>
-            }
+            element={<CandidateHoc><CandidateApplications /></CandidateHoc> }
           />
           <Route
             path="/candidate/conversations"
-            element={
-              <CandidateHoc>
-                <CandidateConversation />
-              </CandidateHoc>
-            }
+            element={<CandidateHoc><CandidateConversation /></CandidateHoc> }
           />
         </Route>
 
@@ -113,44 +71,27 @@ function Navs() {
 
         {/* we dont want user to access the employer profile, employer   jobs,employer application and employer conversations section without login */}
         {/* to achieve this functionality we are going to use   PROTECTED ROUTE */}
-        <Route element={<OnboardingProtectedRoute />}>
-          <Route path="/employer/onboarding" element={<EmployerOnboarding />} />
-        </Route>
+
         <Route element={<ProtectedEmployerRoute />}>
-          {/* <Route path="/employer/onboarding" element={<EmployerOnboarding />} /> */}
+          <Route path="/employer/onboarding" element={<EmployerOnboarding />} />
 
           <Route
-            path="/employer/profile"
-            element={
-              <EmployerHoc>
-                <EmployerProfile />
-              </EmployerHoc>
-            }
-          />
-          <Route
-            path="/employer/jobs"
-            element={
-              <EmployerHoc>
-                <EmployerJobs />
-              </EmployerHoc>
-            }
-          />
-          <Route
-            path="/employer/applications"
-            element={
-              <EmployerHoc>
-                <EmployerApplications />
-              </EmployerHoc>
-            }
-          />
-          <Route
-            path="/employer/conversations"
-            element={
-              <EmployerHoc>
-                <EmployerConversations />
-              </EmployerHoc>
-            }
-          />
+                        path='/employer/profile'
+                        element={<EmployerHoc> <EmployerProfile /> </EmployerHoc>}
+                    />
+                    <Route
+                        path='/employer/jobs'
+                        element={<EmployerHoc><EmployerJobs /></EmployerHoc> }
+                    />
+                    <Route
+                        path='/employer/applications'
+                        element={<EmployerHoc><EmployerApplications /></EmployerHoc> }
+                    />
+                    <Route
+                        path='/employer/conversations'
+                        element={<EmployerHoc><EmployerConversations /></EmployerHoc>  }
+                    />
+           
         </Route>
       </Routes>
     </Router>

@@ -1,6 +1,6 @@
 import { Label } from "@mui/icons-material";
 import { Button, Divider, Grid, TextField } from "@mui/material";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../../firebaseConfig/index";
 import "./EmployerProfile.css";
@@ -15,18 +15,8 @@ import {
 import { storage } from "../../../../firebaseConfig/index";
 import { async } from "@firebase/util";
 import loadinglogo from "../.../../../../../assets/loadingLogo.gif";
-// https://lottiefiles.com/ for Loading gif files.
-import { auth  } from "../../../../firebaseConfig/index"
-import { userContext } from "../../../../contex/UserContex";
-
-
-
-
-
-
 
 function EmployerProfile() {
-  const [state,dispatch]=useContext(userContext)
   const navigateEmployer = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const uid = user.uid;
@@ -73,8 +63,24 @@ function EmployerProfile() {
   const submit = async (e) => {
     e.preventDefault();
     console.log(values);
- 
- 
+
+    //call firebase function to create employer profile
+    //store in firestore collection (userInfo)
+    //create a doc with docId = uid
+
+    // setDoc(docInfo,data)
+    //docInfo= doc(database,collection name, docId)
+    // try {
+    //   await setDoc(doc(db, "userInfo", uid), {
+    //     ...values,
+    //     type: "employer",
+    //   });
+    //   Notification({ message: "profile created successfully" });
+    //   navigateEmployer("/employer/profile");
+    // } catch (err) {
+    //   console.log(err);
+    //   Notification({ message: "something went wrong" });
+    // }
   };
 
   const uploadLogo = (e) => {
@@ -135,11 +141,6 @@ function EmployerProfile() {
       }
     }
   };
-  const logout = () => {
-    auth.signOut();
-    dispatch({type:"LOGOUT"})
-    navigateEmployer("/employer/auth");
-  }
   return (
     <>
       {loading ? (
@@ -220,7 +221,12 @@ function EmployerProfile() {
                       {disableField ? "Edit" : "save"}
                     </Button>
                     <Button
-                      onClick={ logout }
+                      onClick={() => {
+                        // on click of logout button redirect user to landing page and
+                        // also clear localStorage.
+                        localStorage.setItem("user", "");
+                        navigateEmployer("/");
+                      }}
                     >
                       Logout
                     </Button>
