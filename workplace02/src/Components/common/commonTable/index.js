@@ -16,7 +16,7 @@ function CommmonTable({ data, columns, handleClick = null }) {
                 width: column.width ? column.width : "25%",
               }}
             >
-              {column.title}
+              {column.title  }
             </div>
           );
         })}
@@ -72,7 +72,7 @@ function CommmonTable({ data, columns, handleClick = null }) {
                           color: "red",
                         }}
                       />
-                      <div> Rejected</div>
+                      <div className="rejected"> Rejected</div>
                     </div>
                   );
                 } else {
@@ -91,14 +91,14 @@ function CommmonTable({ data, columns, handleClick = null }) {
                           color: "green",
                         }}
                       />
-                      <div> Accepted</div>
+                      <div className="accepted"> Accepted</div>
                     </div>
                   );
                 }
               } else if (column.type === "file") {
                 return (
                   <a
-                  key={j}
+                    key={j}
                     className="resume-btn"
                     href={row[column.dataIndex]}
                     target="__blank"
@@ -106,15 +106,21 @@ function CommmonTable({ data, columns, handleClick = null }) {
                     View resume
                   </a>
                 );
-              } else if (column.type === "action") {
+              } 
+              else if (column.type === "action"  
+              /* && row["status"] !== "accepted"  */
+               ) {
                 return (
-                  <div key={j}>
+                  <div key={j} 
+                  // className={  `${row["status"] === "accepted"} ? action-btn-div-hidden  : action-btn-div`}
+                  >
                     {column.childrenAction.map((item, p) => {
                       return (
                         // row.status
                         //row['status']
 
                         <button
+                        className={row["status"] === "accepted" ? "action-btn-hidden" : "action-btn "}
                           key={p}
                           disabled={row["status"] === "accepted" ? true : false}
                           onClick={() => handleClick(item.action, row)}
