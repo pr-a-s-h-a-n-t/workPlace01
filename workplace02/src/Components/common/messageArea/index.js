@@ -32,20 +32,20 @@ function MessageArea({ allConversations, submitMessage }) {
         onSubmit={(e) => submit(e)}
         style={{
           width: "100%",
-          minHeight: "80vh",
-          border: "1px solid red",
+          height: "95vh",
+          margin: "auto",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "grid", 
-        gridGap: "10px",
-        border: "1px solid black",
-        padding: "2.5rem 0.4rem",
-        
-        
-         }}>
+        <div
+          style={{
+            display: "grid",
+            gridGap: "10px",
+            padding: "2.5rem 0.8rem",
+          }}
+        >
           {sortedConversations &&
             sortedConversations.map((conversation, i) => {
               return (
@@ -82,18 +82,20 @@ function MessageArea({ allConversations, submitMessage }) {
           container
           spacing={1}
           sx={{
-            border: " 1px solid blue",
+            border: " 1px solid grey",
             borderRadius: "10px",
+            margin: "0 5px",
             padding: "10px",
-            position: "sticky",
-            bottom: "10px",
+            position: "sticky  ",
+            bottom: "0",
+            top: "85%",
+            width: "98%",
             background: "#fff",
           }}
         >
           <Grid item xs={10}>
             <TextField
               size="small"
-              // sticky={true}
               value={text}
               onChange={(e) => setText(e.target.value)}
               multiline={true}
@@ -105,7 +107,7 @@ function MessageArea({ allConversations, submitMessage }) {
             <Button type="submit">
               <SendIcon
                 sx={{
-                  color: user.type === "candidate" ? "green" : "#7F31D2",
+                  color: user.type === "candidate" ? "green" : "blue",
                 }}
               />
             </Button>

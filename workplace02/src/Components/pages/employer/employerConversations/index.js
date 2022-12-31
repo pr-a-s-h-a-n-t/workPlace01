@@ -41,7 +41,8 @@ function EmployerConversation() {
       spacing={2}
       sx={{
         maxWidth: "100%",
-        paddingTop: "2rem",
+        height: "85vh",
+        paddingTop: "1rem  ",
       }}
     >
       <Grid
@@ -66,11 +67,13 @@ function EmployerConversation() {
             xs: selectedSectionMobile === "messageArea" ? "block" : "none",
             md: "block",
           },
-          borderLeft: "10px solid red",
-          borderBottom: "10px solid red",
-          maxHeight: "80vh",
+          marginTop: "2rem",
+          height: "94%",
           overflowY: "auto",
-          maxWidth: "80%",
+          overflowX: "hidden",
+          // backgroundColor: "",
+           borderLeft: "10px solid black",
+          boxShadow:"10px 5px 5px green",
           boxSizing: "border-box",
           overflowWrap: "break-word",
         }}

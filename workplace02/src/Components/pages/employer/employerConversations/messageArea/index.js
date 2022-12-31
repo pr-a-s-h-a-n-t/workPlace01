@@ -12,11 +12,22 @@ import Messagearea from "../../../../common/messageArea/index";
 import { db } from "../../../../../firebaseConfig/index";
 import { v4 as uuid } from "uuid";
 
+//  bottom navigation
+
+import Box from "@mui/material/Box";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { purple } from "@mui/material/colors";
+
 function MessageArea({
   allConversations,
   setSelectedSectionMobile,
   currentSelectedMessage,
 }) {
+  const [value, setValue] = React.useState(0);
   let user = JSON.parse(localStorage.getItem("user"));
   let user_id = user.uid;
   const submitMessage = (text) => {
@@ -45,24 +56,24 @@ function MessageArea({
       collection(db, "conversations"),
       where("conversation_id", "==", currentSelectedMessage.conversation_id)
     );
-    try{
-    const querySnapshot = await getDocs(q);
-    querySnapshot.docs.forEach((doc_) => {
-      const data = doc_.data();
-      if (data.user_id !== user_id && !data.seen) {
-        setDoc(
-          doc(db, "conversations", data.conversation_doc_id),
-          {
-            seen: true,
-          },
-          { merge: true }
-        );
-      }
-    });
-  }catch(err){
-    console.log(err);
-  }
-  }
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.docs.forEach((doc_) => {
+        const data = doc_.data();
+        if (data.user_id !== user_id && !data.seen) {
+          setDoc(
+            doc(db, "conversations", data.conversation_doc_id),
+            {
+              seen: true,
+            },
+            { merge: true }
+          );
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     if (currentSelectedMessage) {
       // add a property seen=true to all conversation
@@ -70,32 +81,57 @@ function MessageArea({
       // and the user id should not be equal to the current user id
 
       updateSeen();
-     
     }
-  }, [currentSelectedMessage,allConversations]);
+  }, [currentSelectedMessage, allConversations]);
   return (
     <div>
-      <Button
-       variant="contained"
+      {/* <Button
+        variant="contained"
         color="primary"
-        
         sx={{
           display: {
             xs: "block",
             md: "none",
-            
           },
           position: "absolute",
-           
         }}
         onClick={() => setSelectedSectionMobile("sidebar")}
       >
         back
-      </Button>
+      </Button> */}
       <Messagearea
         allConversations={allConversations}
         submitMessage={submitMessage}
       />
+      <Box sx={{ width: "100%" , margin: "auto"}}>
+        <BottomNavigation
+        //  md={3}
+          sx={{
+            display: {
+              xs: "block",
+              md: "none",
+              lg: "none",
+            },
+            width: "90%",
+            margin: "0.5rem",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "purple",
+              width: "5rem",
+              position: "absolute",
+              bottom: 0,
+              left: "40%",
+              margin: "0.5rem",
+            }}
+            onClick={() => setSelectedSectionMobile("sidebar")}
+          >
+            back
+          </Button>
+        </BottomNavigation>
+      </Box>
     </div>
   );
 }
